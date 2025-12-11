@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUNE-X WhatsApp Bot</title>
+
+    <meta name="theme-color" content="#0077B6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="JUNE-X Bot">
+    <meta name="description" content="Advanced WhatsApp Bot Platform - Deploy Pretty-MD with powerful features">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="https://files.catbox.moe/xu88nf.jpg">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://files.catbox.moe/xu88nf.jpg">
+    <link rel="apple-touch-icon" href="https://files.catbox.moe/xu88nf.jpg">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Transparent Blue Theme */
+            --primary-blue: #0077B6;
+            --secondary-blue: #00B4D8;
+            --light-blue: #90E0EF;
+            --accent-blue: #CAF0F8;
+            --transparent-blue: rgba(0, 180, 216, 0.1);
+            --transparent-blue-medium: rgba(0, 180, 216, 0.3);
+            --transparent-blue-dark: rgba(0, 119, 182, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(144, 224, 239, 0.2);
+            --text-primary: #E3F2FD;
+            --text-secondary: #B3E5FC;
+            --bg-gradient: linear-gradient(135deg, rgba(0, 119, 182, 0.05) 0%, rgba(0, 180, 216, 0.05) 100%);
+        }
+
+        .dark-theme {
+            --glass-bg: rgba(0, 0, 0, 0.2);
+            --glass-border: rgba(144, 224, 239, 0.1);
+            --text-primary: #FFFFFF;
+            --text-secondary: #B3E5FC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .aurora-layer {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            filter: blur(60px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .aurora-layer-1 {
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, var(--primary-blue) 0%, transparent 70%);
+            top: -30vh;
+            left: -20vw;
+            animation-delay: 0s;
+        }
+
+        .aurora-layer-2 {
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--secondary-blue) 0%, transparent 70%);
+            top: 60vh;
+            right: -10vw;
+            animation-delay: 5s;
+            animation-duration: 25s;
+        }
+
+        .aurora-layer-3 {
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, var(--light-blue) 0%, transparent 70%);
+            bottom: -20vh;
+            left: 40vw;
+            animation-delay: 10s;
+            animation-duration: 30s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.05);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.95);
+            }
+        }
+
+        /* Animated Floating Particles */
+        .floating-particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--secondary-blue);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: particle-float 15s infinite linear;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        /* Main Container - Reduced Width & Centered */
+        .cypher-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glass Card with Glowing Corners */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: float-up 0.5s ease-out;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                transparent 40%, 
+                var(--secondary-blue) 50%, 
+                transparent 60%, 
+                transparent 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glass-card:hover::before {
+            opacity: 0.5;
+            animation: corner-glow 2s infinite;
+        }
+
+        @keyframes corner-glow {
+            0%, 100% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @keyframes float-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating Navigation */
+        .floating-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 15px 10px;
+        }
+
+        .nav-item {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--transparent-blue);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item.active {
+            background: var(--secondary-blue);
+            color: white;
+        }
+
+        .nav-item:hover {
+            transform: translateX(-5px);
+            background: var(--secondary-blue);
+        }
+
+        .nav-item::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--transparent-blue-dark);
+            color: var(--text-primary);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            margin-right: 10px;
+        }
+
+        .nav-item:hover::after {
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--transparent-blue);
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(0, 180, 216, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(0, 180, 216, 0);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            position: relative;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue), var(--light-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient-shift 3s infinite alternate;
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        /* Rectangular Buttons with Opposite Corners */
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .hero-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            /* Rectangular with opposite corners curved */
+            border-radius: 15px 0 15px 0;
+            animation: button-glow 2s infinite alternate;
+        }
+
+        @keyframes button-glow {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 180, 216, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 180, 216, 0.6);
+            }
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            border: none;
+        }
+
+        .secondary-btn {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--secondary-blue);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            border-radius: 0 15px 0 15px;
+            animation: none;
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.4);
+        }
+
+        /* Stats */
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-blue);
+            margin-bottom: 5px;
+            animation: count-up 2s ease-out;
+        }
+
+        @keyframes count-up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Quick Access Section */
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--secondary-blue);
+            animation: line-expand 2s infinite;
+        }
+
+        @keyframes line-expand {
+            0%, 100% {
+                width: 100px;
+            }
+            50% {
+                width: 150px;
+            }
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Access Grid */
+        .access-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .access-card {
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        .card-header {
+            margin-bottom: 25px;
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--transparent-blue);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--secondary-blue);
+            margin-bottom: 15px;
+        }
+
+        /* Server Buttons */
+        .server-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .server-btn {
+            padding: 15px 20px;
+            background: var(--transparent-blue);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px 0 15px 0;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .server-btn:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-3px);
+            border-radius: 0 15px 0 15px;
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+        }
+
+        /* Stats Dashboard */
+        .stats-dashboard {
+            margin-bottom: 80px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .stats-card {
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .stats-badge {
+            background: var(--secondary-blue);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-blue);
+        }
+
+        /* Deploy Section */
+        .deploy-section {
+            margin-bottom: 80px;
+        }
+
+        .deploy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .deploy-card {
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .deploy-header {
+            margin-bottom: 25px;
+        }
+
+        .deploy-logo {
+            margin-bottom: 15px;
+        }
+
+        .deploy-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            text-decoration: none;
+            border-radius: 15px 0 15px 0;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: button-pulse 2s infinite;
+        }
+
+        @keyframes button-pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .deploy-btn:hover {
+            transform: translateY(-3px);
+            border-radius: 0 15px 0 15px;
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.4);
+        }
+
+        /* Installation Tabs */
+        .install-section {
+            margin-bottom: 80px;
+        }
+
+        .install-container {
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 15px 25px;
+            background: var(--transparent-blue);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px 0 15px 0;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: var(--secondary-blue);
+            color: white;
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-3px);
+            border-radius: 0 15px 0 15px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .code-header {
+            background: rgba(0, 119, 182, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        pre {
+            padding: 20px;
+            margin: 0;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            color: var(--accent-blue);
+        }
+
+        .copy-btn {
+            padding: 8px 15px;
+            background: var(--secondary-blue);
+            border: none;
+            border-radius: 10px 0 10px 0;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-blue);
+            border-radius: 0 10px 0 10px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 80px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .faq-item {
+            padding: 25px;
+            border-radius: 20px;
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .faq-question i {
+            color: var(--secondary-blue);
+            font-size: 1.5rem;
+        }
+
+        /* Disclaimer */
+        .disclaimer-section {
+            margin-bottom: 80px;
+        }
+
+        .disclaimer-card {
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .disclaimer-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .disclaimer-header i {
+            color: #ff6b6b;
+            font-size: 2rem;
+        }
+
+        .agree-btn {
+            margin-top: 25px;
+            padding: 15px 40px;
+            background: var(--secondary-blue);
+            border: none;
+            border-radius: 15px 0 15px 0;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .agree-btn:hover {
+            background: var(--primary-blue);
+            transform: translateY(-3px);
+            border-radius: 0 15px 0 15px;
+            box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+        }
+
+        /* Footer */
+        .main-footer {
+            background: var(--transparent-blue-dark);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            padding: 50px 20px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary-blue);
+            border-radius: 15px 0 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--transparent-blue);
+            border-radius: 15px 0 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--secondary-blue);
+            transform: translateY(-3px);
+            border-radius: 0 15px 0 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cypher-container {
+                padding: 10px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .floating-nav {
+                display: none;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .theme-toggle-track {
+            width: 60px;
+            height: 30px;
+            background: var(--transparent-blue);
+            border-radius: 15px;
+            position: relative;
+            border: 1px solid var(--glass-border);
+        }
+
+        .theme-toggle-thumb {
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: var(--secondary-blue);
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dark-theme .theme-toggle-thumb {
+            transform: translateX(30px);
+        }
+
+        /* PWA Banner */
+        .pwa-install-banner {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            z-index: 1000;
+            animation: slide-up 0.5s ease;
+        }
+
+        @keyframes slide-up {
+            from {
+                transform: translate(-50%, 100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .pwa-banner-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .pwa-install-btn {
+            padding: 10px 20px;
+            background: var(--secondary-blue);
+            border: none;
+            border-radius: 15px 0 15px 0;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pwa-install-btn:hover {
+            border-radius: 0 15px 0 15px;
+            background: var(--primary-blue);
+        }
+
+        /* Add glowing border animation */
+        .glowing-border {
+            position: relative;
+        }
+
+        .glowing-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                var(--primary-blue), 
+                var(--secondary-blue), 
+                var(--light-blue), 
+                var(--secondary-blue));
+            border-radius: inherit;
+            z-index: -1;
+            animation: border-glow 3s infinite linear;
+            background-size: 400% 400%;
+        }
+
+        @keyframes border-glow {
+            0% {
+                background-position: 0% 50%;
+                opacity: 0.7;
+            }
+            50% {
+                background-position: 100% 50%;
+                opacity: 1;
+            }
+            100% {
+                background-position: 0% 50%;
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+
+<body class="light-theme">
+    <!-- Animated Background -->
+    <div class="aurora-background">
+        <div class="aurora-layer aurora-layer-1"></div>
+        <div class="aurora-layer aurora-layer-2"></div>
+        <div class="aurora-layer aurora-layer-3"></div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="floating-particles" id="particles"></div>
+
+    <!-- PWA Banner -->
+    <div class="pwa-install-banner" id="pwa-banner" style="display: none;">
+        <div class="pwa-banner-content">
+            <div class="pwa-banner-icon">
+                <i class="fas fa-download"></i>
+            </div>
+            <div class="pwa-banner-text">
+                <h4>Install JUNE-X App</h4>
+                <p>Get the full experience with our PWA</p>
+            </div>
+            <div class="pwa-banner-actions">
+                <button class="pwa-install-btn" id="pwa-install">Install</button>
+                <button class="pwa-dismiss-btn" id="pwa-dismiss">×</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="theme-toggle">
+        <div class="theme-toggle-track">
+            <div class="theme-toggle-thumb">
+                <i class="fas fa-sun sun-icon"></i>
+                <i class="fas fa-moon moon-icon"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="cypher-container">
+        <!-- Floating Navigation -->
+        <nav class="floating-nav">
+            <a href="#home" class="nav-item active" data-tooltip="Home">
+                <i class="fas fa-home"></i>
+            </a>
+            <a href="#features" class="nav-item" data-tooltip="Features">
+                <i class="fas fa-star"></i>
+            </a>
+            <a href="#deploy" class="nav-item" data-tooltip="Deploy">
+                <i class="fas fa-rocket"></i>
+            </a>
+            <a href="#install" class="nav-item" data-tooltip="Install">
+                <i class="fas fa-download"></i>
+            </a>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="hero-section" id="home">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-robot"></i>
+                    <span>JUNE-X WEB Platform</span>
+                </div>
+
+                <h1 class="hero-title">
+                    <span class="gradient-text">JUNE-X</span>
+                </h1>
+
+                <p class="hero-subtitle">Next-Generation WhatsApp Automation</p>
+                <p class="hero-description">Deploy Pretty-MD with advanced features, multi-session support, AI capabilities, and high reliability for your WhatsApp automation needs.</p>
+
+                <div class="hero-actions">
+                    <a href="#deploy" class="hero-btn primary-btn glowing-border">
+                        <i class="fas fa-bolt"></i>
+                        <span>Quick Deploy</span>
+                    </a>
+                    <a href="#install" class="hero-btn secondary-btn">
+                        <i class="fas fa-code"></i>
+                        <span>Manual Install</span>
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="hero-users">25K+</div>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">250+</div>
+                        <div class="stat-label">Commands</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">99.8%</div>
+                        <div class="stat-label">Uptime</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Quick Access Section -->
+        <section class="quick-access-section" id="features">
+            <div class="section-header">
+                <h2 class="section-title">Quick Access Hub</h2>
+                <p class="section-subtitle">Everything you need to get started with JUNE-X WhatsApp Bot</p>
+            </div>
+
+            <div class="access-grid">
+                <div class="glass-card access-card glowing-border">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <h3>Pair Code Servers</h3>
+                        <p>Generate session codes instantly</p>
+                    </div>
+                    <div class="server-grid">
+                        <a href="https://xhypher-pair200-37611567e41a.herokuapp.com/pair" target="_blank" class="server-btn">
+                            <span>Primary Server</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a href="https://xhypher-pair200-37611567e41a.herokuapp.com/pair" target="_blank" class="server-btn">
+                            <span>Backup Server</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass-card access-card glowing-border">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <h3>QR Code Generator</h3>
+                        <p>Scan to connect instantly</p>
+                    </div>
+                    <div class="server-grid">
+                        <a href="https://pair-me3-c561ad4dbbfe.herokuapp.com/qr" target="_blank" class="server-btn">
+                            <span>QR Server</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass-card access-card glowing-border">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <h3>Pretty-MD Download</h3>
+                        <p>Get the latest release</p>
+                    </div>
+                    <div class="server-grid">
+                        <a href="https://github.com/superstar-zimtk/Pretty-md/archive/refs/heads/main.zip" class="server-btn primary" target="_blank" rel="noopener noreferrer">
+                            <span>Latest Release</span>
+                            <i class="fas fa-download"></i>
+                        </a>
+                        <a href="https://github.com/superstar-zimtk/Pretty-md" target="_blank" class="server-btn">
+                            <span>GitHub Repo</span>
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="glass-card access-card glowing-border">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3>Join Community</h3>
+                        <p>Stay updated and get support</p>
+                    </div>
+                    <div class="server-grid">
+                        <a href="https://t.me/xhypher2025" target="_blank" class="server-btn">
+                            <span>Telegram Group</span>
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://whatsapp.com/channel/0029VbBSyvgDuMRmt1JTRY12" target="_blank" class="server-btn">
+                            <span>WhatsApp Channel</span>
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Dashboard -->
+        <section class="stats-dashboard">
+            <div class="stats-grid">
+                <div class="glass-card stats-card glowing-border">
+                    <div class="stats-header">
+                        <h3>Pretty-MD Analytics</h3>
+                        <div class="stats-badge">Live</div>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-star"></i>
+                                <span>GitHub Stars</span>
+                            </div>
+                            <div class="stat-value" id="prettymd-stars">...</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-code-branch"></i>
+                                <span>Forks</span>
+                            </div>
+                            <div class="stat-value" id="prettymd-forks">...</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-clock"></i>
+                                <span>Uptime</span>
+                            </div>
+                            <div class="stat-value">99.8%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card stats-card glowing-border">
+                    <div class="stats-header">
+                        <h3>Bot Features</h3>
+                        <div class="stats-badge">Updated</div>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-bolt"></i>
+                                <span>Commands</span>
+                            </div>
+                            <div class="stat-value">250+</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-robot"></i>
+                                <span>AI Features</span>
+                            </div>
+                            <div class="stat-value">15+</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-plug"></i>
+                                <span>Plugins</span>
+                            </div>
+                            <div class="stat-value">50+</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card stats-card glowing-border">
+                    <div class="stats-header">
+                        <h3>User Statistics</h3>
+                        <div class="stats-badge">Live</div>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-users"></i>
+                                <span>Active Users</span>
+                            </div>
+                            <div class="stat-value">25K+</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-server"></i>
+                                <span>Daily Sessions</span>
+                            </div>
+                            <div class="stat-value">5K+</div>
+                        </div>
+                        <div class="stat-row">
+                            <div class="stat-info">
+                                <i class="fas fa-globe"></i>
+                                <span>Countries</span>
+                            </div>
+                            <div class="stat-value">50+</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deploy Section -->
+        <section class="deploy-section" id="deploy">
+            <div class="section-header">
+                <h2 class="section-title">One-Click Deployment</h2>
+                <p class="section-subtitle">Deploy Pretty-MD instantly on your preferred platform</p>
+            </div>
+
+            <div class="deploy-grid">
+                <div class="glass-card deploy-card heroku-card glowing-border">
+                    <div class="deploy-header">
+                        <div class="deploy-logo">
+                            <img src="https://www.herokucdn.com/favicon.ico" alt="Heroku" width="40" height="40">
+                        </div>
+                        <div class="deploy-info">
+                            <h4>Heroku</h4>
+                            <p>Cloud platform deployment</p>
+                        </div>
+                    </div>
+                    <a href="https://heroku-deployment-alpha.vercel.app/" class="deploy-btn">
+                        <i class="fas fa-rocket"></i>
+                        <span>Deploy Now</span>
+                    </a>
+                </div>
+
+                <div class="glass-card deploy-card replit-card glowing-border">
+                    <div class="deploy-header">
+                        <div class="deploy-logo">
+                            <img src="https://repl.it/favicon.ico" alt="Replit" width="40" height="40">
+                        </div>
+                        <div class="deploy-info">
+                            <h4>Replit</h4>
+                            <p>Online IDE deployment</p>
+                        </div>
+                    </div>
+                    <a href="https://replit/github/superstar-zimtk/Pretty-md" target="_blank" class="deploy-btn">
+                        <i class="fas fa-code"></i>
+                        <span>Run on Replit</span>
+                    </a>
+                </div>
+
+                <div class="glass-card deploy-card railway-card glowing-border">
+                    <div class="deploy-header">
+                        <div class="deploy-logo">
+                            <img src="https://railway.app/favicon.ico" alt="Railway" width="40" height="40">
+                        </div>
+                        <div class="deploy-info">
+                            <h4>Railway</h4>
+                            <p>Modern deployment platform</p>
+                        </div>
+                    </div>
+                    <a href="https://railway.app/template/Pretty-md" class="deploy-btn">
+                        <i class="fas fa-rocket"></i>
+                        <span>Deploy on Railway</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Guide -->
+        <section class="install-section" id="install">
+            <div class="section-header">
+                <h2 class="section-title">Installation Guide</h2>
+                <p class="section-subtitle">Choose your preferred installation method</p>
+            </div>
+
+            <div class="glass-card install-container glowing-border">
+                <div class="install-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="windows">
+                            <i class="fab fa-windows"></i>
+                            <span>Windows PowerShell</span>
+                        </button>
+                        <button class="tab-btn" data-tab="vps">
+                            <i class="fas fa-server"></i>
+                            <span>VPS Setup</span>
+                        </button>
+                        <button class="tab-btn" data-tab="termux">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span>Termux (Android)</span>
+                        </button>
+                        <button class="tab-btn" data-tab="pm2">
+                            <i class="fas fa-cogs"></i>
+                            <span>PM2 Manager</span>
+                        </button>
+                    </div>
+
+                    <div class="tab-content active" id="windows-tab">
+                        <div class="tab-header">
+                            <h3><i class="fab fa-windows"></i> Windows PowerShell Installation</h3>
+                            <p>Install Pretty-MD on Windows using PowerShell</p>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span><i class="fas fa-terminal"></i> PowerShell Commands</span>
+                                <button class="copy-btn" data-copy="windows-commands">
+                                    <i class="far fa-copy"></i> Copy All
+                                </button>
+                            </div>
+                            <pre><code id="windows-commands"># Update system
+winget upgrade --all
+
+# Install required software
+winget install Git.Git
+winget install Gyan.FFmpeg
+winget install ImageMagick.ImageMagick
+winget install OpenJS.NodeJS.LTS
+
+# IMPORTANT: Restart PowerShell before proceeding
+# Press Ctrl+C to stop, then reopen PowerShell as Administrator
+
+# Clone repository
+git clone https://github.com/superstar-zimtk/Pretty-md.git
+cd Pretty-md
+
+# Install dependencies
+npm install
+
+# Configure environment
+npm run setup
+
+# Start bot
+npm start</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="vps-tab">
+                        <div class="tab-header">
+                            <h3><i class="fas fa-server"></i> VPS Installation</h3>
+                            <p>Deploy on Ubuntu/Debian VPS servers</p>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span><i class="fas fa-terminal"></i> VPS Installation</span>
+                                <button class="copy-btn" data-copy="vps-commands">
+                                    <i class="far fa-copy"></i> Copy All
+                                </button>
+                            </div>
+                            <pre><code id="vps-commands">sudo apt update && sudo apt upgrade -y
+sudo apt install -y git imagemagick ffmpeg libwebp-dev
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 20
+nvm use 20
+git clone https://github.com/superstar-zimtk/Pretty-md.git
+cd Pretty-md
+npm install --build-from-source
+npm run setup
+npm start</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="termux-tab">
+                        <div class="tab-header">
+                            <h3><i class="fas fa-mobile-alt"></i> Termux Installation</h3>
+                            <p>Run on Android devices using Termux</p>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span><i class="fas fa-terminal"></i> Termux Commands</span>
+                                <button class="copy-btn" data-copy="termux-commands">
+                                    <i class="far fa-copy"></i> Copy All
+                                </button>
+                            </div>
+                            <pre><code id="termux-commands">pkg update -y && pkg upgrade -y
+pkg install -y git nodejs-lts python make clang libsqlite
+termux-setup-storage
+cd ~
+git clone https://github.com/superstar-zimtk/Pretty-md.git
+cd Pretty-md
+npm config set python python3
+npm install --build-from-source
+npm run setup
+npm start</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="pm2-tab">
+                        <div class="tab-header">
+                            <h3><i class="fas fa-cogs"></i> PM2 Process Manager</h3>
+                            <p>Manage your bot with PM2 for production deployment</p>
+                        </div>
+                        <div class="code-block">
+                            <div class="code-header">
+                                <span><i class="fas fa-terminal"></i> PM2 Setup</span>
+                                <button class="copy-btn" data-copy="pm2-commands">
+                                    <i class="far fa-copy"></i> Copy All
+                                </button>
+                            </div>
+                            <pre><code id="pm2-commands">npm install -g pm2
+pm2 start index.js --name pretty-md
+pm2 save
+pm2 startup
+pm2 logs pretty-md</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Everything you need to know about JUNE-X WhatsApp Bot</p>
+            </div>
+
+            <div class="faq-grid">
+                <div class="glass-card faq-item glowing-border">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Is JUNE-X WhatsApp Bot free to use?</h3>
+                    </div>
+                    <p>Yes, JUNE-X bot is completely free and open-source. Pretty-MD is available for everyone to use and modify according to their needs.</p>
+                </div>
+
+                <div class="glass-card faq-item glowing-border">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>What features does Pretty-MD offer?</h3>
+                    </div>
+                    <p>Pretty-MD offers 250+ commands including AI features, media tools, group management, downloaders, games, utilities, and plugin support.</p>
+                </div>
+
+                <div class="glass-card faq-item glowing-border">
+                    <div class="faq-question">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Where can I deploy Pretty-MD?</h3>
+                    </div>
+                    <p>You can deploy Pretty-MD on Heroku, Replit, Railway, VPS, or use our managed JUNE-X Platform for easy hosting with automatic updates.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <div class="logo-icon">JX</div>
+                        <div class="logo-text">
+                            <h4>JUNE-X WEB</h4>
+                            <p>WhatsApp Bot Platform</p>
+                        </div>
+                    </div>
+                    <p>Advanced WhatsApp automation solution with AI capabilities. Built with passion for developers and power users.</p>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:xhyphertech@gmail.com">xhyphertech@gmail.com</a></p>
+                        <p><i class="fas fa-phone"></i> <a href="https://wa.me/263787021910">+263 78 702 1910</a></p>
+                    </div>
+                </div>
+
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Resources</h4>
+                        <a href="https://github.com/superstar-zimtk/Pretty-md" target="_blank">
+                            <i class="fab fa-github"></i> Pretty-MD Repo
+                        </a>
+                        <a href="https://pair-me3-c561ad4dbbfe.herokuapp.com/qr" target="_blank">
+                            <i class="fas fa-qrcode"></i> QR Generator
+                        </a>
+                    </div>
+
+                    <div class="link-group">
+                        <h4>Community</h4>
+                        <a href="https://t.me/xhypher2025" target="_blank">
+                            <i class="fab fa-telegram"></i> Telegram Group
+                        </a>
+                        <a href="https://whatsapp.com/channel/0029VbBSyvgDuMRmt1JTRY12" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Channel
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="https://github.com/superstar-zimtk" class="social-icon" target="_blank">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://t.me/xhypher2025" class="social-icon" target="_blank">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="https://wa.me/263787021910" class="social-icon" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+
+                <div class="copyright">
+                    <p>&copy; 2025 JUNE-X WEB. All rights reserved.</p>
+                    <p>Made with <i class="fas fa-heart"></i> by <strong>JUNE-X Tech</strong></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random properties
+                const size = Math.random() * 10 + 5;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const duration = Math.random() * 10 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}vw`;
+                particle.style.top = `${posY}vh`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Tab switching functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and tabs
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding tab
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Copy code functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetId = button.getAttribute('data-copy');
+                const codeElement = document.getElementById(targetId);
+                const codeText = codeElement.textContent;
+                
+                navigator.clipboard.writeText(codeText).then(() => {
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    button.style.background = '#10b981';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.style.background = '';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Theme toggle
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            document.body.classList.toggle('light-theme');
+            
+            // Save preference
+            const isDark = document.body.classList.contains('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.classList.add(savedTheme === 'dark' ? 'dark-theme' : 'light-theme');
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+                    document.querySelector(`.nav-item[href="${targetId}"]`).classList.add('active');
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            
+            // Animate stats
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const finalValue = stat.textContent;
+                stat.textContent = '0';
+                
+                let current = 0;
+                const increment = parseInt(finalValue) / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= parseInt(finalValue)) {
+                        stat.textContent = finalValue;
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current) + '+';
+                    }
+                }, 50);
+            });
+        });
+
+        // Handle scroll for nav highlighting
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
